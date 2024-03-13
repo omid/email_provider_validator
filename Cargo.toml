@@ -1,0 +1,22 @@
+[package]
+name = "email_provider_validator"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/omid/email_provider_validator"
+keywords = ["email", "validator", "provider"]
+description = "A Rust library to validate email provider"
+categories = ["email", "accessibility"]
+build = "build.rs"
+
+[dependencies]
+phf = { version = "0.11", default-features = false }
+
+[build-dependencies]
+phf_codegen = "0.11"
+reqwest = { version = "0.11", features = ["blocking"] }
+
+[features]
+default = ["free"]
+free = []
+disposable = []

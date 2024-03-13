@@ -28,7 +28,7 @@ The module includes a pre-generated list of free email domains and the following
 
 ### Disposable Email Validation
 
-Enable the "disposable" feature to include functionality related to disposable/temporary email validation, e.g.: `temp-mail.org`. 
+Enable the `disposable` feature to include functionality related to disposable/temporary email validation, e.g.: `temp-mail.org`. 
 The module includes a pre-generated list of disposable email domains and the following functions are provided:
 
 - `is_disposable_domain`: Checks if the given domain is a disposable email domain.

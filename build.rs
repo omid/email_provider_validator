@@ -129,16 +129,16 @@ fn get_clean_web_result(urls: &[&str], extend: &[&str]) -> Vec<String> {
     let email_list = urls
         .iter()
         .map(|url| reqwest::blocking::get(*url).unwrap().text().unwrap())
-        .map(|text| text.to_lowercase());
+        .map(|v| v.to_lowercase());
 
     let init_list = extend
         .iter()
-        .map(|&x| x.to_string())
+        .map(|&v| v.to_string())
         .collect::<Vec<String>>();
 
     let mut email_list = email_list.fold(init_list, |mut acc: Vec<String>, text| {
-        let x = text.lines().map(String::from).collect::<Vec<String>>();
-        acc.extend(x);
+        let lines = text.lines().map(String::from).collect::<Vec<String>>();
+        acc.extend(lines);
         acc
     });
 

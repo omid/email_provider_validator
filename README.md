@@ -72,9 +72,10 @@ fn main() {
 
 This library is not a complete solution for email validation, and it is not guaranteed to be 100% accurate.
 
-It is intended to be used as a tool to help filter out free email and disposable email addresses providers.
+It is intended to be used as a tool to help filter out free email and disposable email address providers.
 
-If you need to also validate the format of the email address, you should use other libraries, like [email_address](https://crates.io/crates/email_address) or [fast_chemail](https://crates.io/crates/fast_chemail/) or tools in combination with this library.
+If you need to validate an email address format, you should use other libraries,
+like [email_address](https://crates.io/crates/email_address) or [fast_chemail](https://crates.io/crates/fast_chemail/).
 
 ## Contributing
 
@@ -82,4 +83,4 @@ Feel free to contribute to the project by opening issues or submitting pull requ
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.

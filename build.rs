@@ -109,7 +109,7 @@ fn gen_static(name: &str, email_list: &[String]) {
         name.to_uppercase(),
         list.build()
     )
-        .unwrap();
+    .unwrap();
 }
 
 fn gen_output(name: &str, email_list: &[String]) {

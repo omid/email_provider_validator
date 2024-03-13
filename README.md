@@ -42,7 +42,7 @@ To use this library, add it as a dependency in your `Cargo.toml` file:
 
 ```toml
 [dependencies]
-email_validation = "0.1"
+email_provider_validator = "0.1"
 ```
 
 The default feature is set to `free`, meaning the free email validation functions are included by default.

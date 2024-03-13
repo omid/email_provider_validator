@@ -1,0 +1,36 @@
+name: Build and publish
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+  # Minute [0,59], Hour [0,23], Day of the month [1,31], Month of the year [1,12], Day of the week ([0,6] with 0=Sunday)
+  - cron:  '0 0 * * 0'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+        - stable
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install stable toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+    - name: Cache
+      uses:
+        mozilla-actions/sccache-action@v0.0.3
+    - name: Build
+      run: |
+        cargo build
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: Update output CSVs
+        file_pattern: output/*

@@ -1,4 +1,5 @@
 [![Crates.io](https://img.shields.io/crates/v/email_provider_validator.svg?style=flat)](https://crates.io/crates/email_provider_validator)
+[![docs](https://docs.rs/email_provider_validator/badge.svg)](https://docs.rs/email_provider_validator)
 
 # Email Validation Library
 

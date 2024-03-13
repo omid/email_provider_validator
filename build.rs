@@ -61,6 +61,12 @@ const FREE_EMAILS: &[&str] = &[
 // ];
 
 fn main() {
+    if env::var("DOCS_RS").is_ok() {
+        gen_static("free", &[]);
+        gen_static("disposable", &[]);
+        return;
+    }
+
     // free email list
     let name = "free";
     let email_list = get_clean_web_result(&[

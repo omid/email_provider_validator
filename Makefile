@@ -14,3 +14,6 @@ check_strictly:
 
 test:
 	@cargo test --features free,disposable
+
+doc:
+	@DOCS_RS=1 cargo doc --open --no-deps --all-features

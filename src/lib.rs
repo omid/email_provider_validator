@@ -4,12 +4,14 @@ compile_error!("You must enable at least one of `free` and `disposable` features
 #[cfg(feature = "free")]
 include!(concat!(env!("OUT_DIR"), "/free.rs"));
 
+/// Checks if the domain is for a free email provider.
 #[cfg(feature = "free")]
 #[must_use]
 pub fn is_free_domain(domain: &str) -> bool {
     FREE_EMAILS.contains(domain.to_ascii_lowercase().trim().as_bytes())
 }
 
+/// Checks if the email is from a free email provider.
 #[cfg(feature = "free")]
 #[must_use]
 pub fn is_free_email(email: &str) -> bool {
@@ -20,12 +22,14 @@ pub fn is_free_email(email: &str) -> bool {
 #[cfg(feature = "disposable")]
 include!(concat!(env!("OUT_DIR"), "/disposable.rs"));
 
+/// Checks if the domain is for a disposable email provider.
 #[cfg(feature = "disposable")]
 #[must_use]
 pub fn is_disposable_domain(domain: &str) -> bool {
     DISPOSABLE_EMAILS.contains(domain.to_ascii_lowercase().trim().as_bytes())
 }
 
+/// Checks if the email is from a disposable email provider.
 #[cfg(feature = "disposable")]
 #[must_use]
 pub fn is_disposable_email(email: &str) -> bool {
@@ -33,6 +37,7 @@ pub fn is_disposable_email(email: &str) -> bool {
     is_disposable_domain(domain)
 }
 
+/// Checks if the domain is for a work email.
 #[must_use]
 pub fn is_work_domain(domain: &str) -> bool {
     #[cfg(feature = "free")]
@@ -48,6 +53,7 @@ pub fn is_work_domain(domain: &str) -> bool {
     true
 }
 
+/// Checks if the email is a work email.
 #[must_use]
 pub fn is_work_email(email: &str) -> bool {
     let domain = extract_domain_from_email(email);

@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{BufWriter, Write};
 use std::path::Path;
 
-const MISSED_HS_EMAILS: &[&str] = &[
+const FREE_EMAILS: &[&str] = &[
     "pm.me",
     "proton.me",
     "protonmail.ch",
@@ -62,83 +62,88 @@ const MISSED_HS_EMAILS: &[&str] = &[
 
 fn main() {
     // free email list
-    let path = Path::new(&env::var("OUT_DIR").unwrap()).join("free.rs");
-    let mut file = BufWriter::new(File::create(path).unwrap());
+    let name = "free";
+    let email_list = get_clean_web_result(&[
+        "https://f.hubspotusercontent40.net/hubfs/2832391/Marketing/Lead-Capture/free-domains-2.csv"
+    ], FREE_EMAILS);
 
-    let mut email_hs_list = reqwest::blocking::get("https://f.hubspotusercontent40.net/hubfs/2832391/Marketing/Lead-Capture/free-domains-2.csv")
-        .unwrap()
-        .text()
-        .unwrap();
-    email_hs_list.make_ascii_lowercase();
-
-    let mut free_email_list = email_hs_list.split('\n').collect::<Vec<_>>();
-    free_email_list.extend(MISSED_HS_EMAILS);
-
-    // trim and lower case all
-    let mut free_email_list = free_email_list
-        .into_iter()
-        .map(|email| email.trim().to_ascii_lowercase())
-        .filter(|email| !email.is_empty())
-        .collect::<Vec<_>>();
-
-    // remove duplicates
-    free_email_list.sort_unstable();
-    free_email_list.dedup();
-
-    let mut list = phf_codegen::Set::<&[u8]>::new();
-    for email in &free_email_list {
-        list.entry(email.as_bytes());
-    }
-
-    writeln!(
-        &mut file,
-        "static FREE_EMAILS: phf::Set<&'static [u8]> = \n{};\n",
-        list.build()
-    )
-    .unwrap();
+    gen_static(name, &email_list);
+    gen_output(name, &email_list);
 
     // disposable email list
-    let path = Path::new(&env::var("OUT_DIR").unwrap()).join("disposable.rs");
+    let name = "disposable";
+    let email_list = get_clean_web_result(
+        &[
+            "https://disposable.github.io/disposable-email-domains/domains.txt",
+            "https://raw.githubusercontent.com/FGRibreau/mailchecker/master/list.txt",
+        ],
+        &[],
+    );
+
+    gen_static(name, &email_list);
+    gen_output(name, &email_list);
+
+    // example email list
+    // let name = "example";
+    // let email_list = get_clean_web_result(
+    //     &[],
+    //     EXAMPLE_DOMAINS,
+    // );
+    //
+    // gen_static(name, &email_list);
+    // gen_output(name, &email_list);
+}
+
+fn gen_static(name: &str, email_list: &[String]) {
+    let path = Path::new(&env::var("OUT_DIR").unwrap()).join(format!("{name}.rs"));
     let mut file = BufWriter::new(File::create(path).unwrap());
 
-    let mut email_dis_list1 =
-        reqwest::blocking::get("https://disposable.github.io/disposable-email-domains/domains.txt")
-            .unwrap()
-            .text()
-            .unwrap();
-    email_dis_list1.make_ascii_lowercase();
-
-    let mut email_dis_list2 = reqwest::blocking::get(
-        "https://raw.githubusercontent.com/FGRibreau/mailchecker/master/list.txt",
-    )
-    .unwrap()
-    .text()
-    .unwrap();
-    email_dis_list2.make_ascii_lowercase();
-
-    let mut disp_email_list = email_dis_list1.split('\n').collect::<Vec<_>>();
-    disp_email_list.extend(email_dis_list2.split('\n'));
-
-    // trim and lower case all
-    let mut disp_email_list = disp_email_list
-        .into_iter()
-        .map(|email| email.trim().to_ascii_lowercase())
-        .filter(|email| !email.is_empty())
-        .collect::<Vec<_>>();
-
-    // remove duplicates
-    disp_email_list.sort_unstable();
-    disp_email_list.dedup();
-
     let mut list = phf_codegen::Set::<&[u8]>::new();
-    for email in &disp_email_list {
+    for email in email_list {
         list.entry(email.as_bytes());
     }
 
     writeln!(
         &mut file,
-        "static DISPOSABLE_EMAILS: phf::Set<&'static [u8]> = \n{};\n",
+        "static {}_EMAILS: phf::Set<&'static [u8]> = \n{};\n",
+        name.to_uppercase(),
         list.build()
     )
-    .unwrap();
+        .unwrap();
+}
+
+fn gen_output(name: &str, email_list: &[String]) {
+    let path = Path::new("output").join(format!("{name}.csv"));
+    let mut file = BufWriter::new(File::create(path).unwrap());
+
+    writeln!(&mut file, "{}", email_list.join("\n")).unwrap();
+
+    println!(
+        "cargo:warning=Number of {} emails: {}",
+        name,
+        email_list.len()
+    );
+}
+
+fn get_clean_web_result(urls: &[&str], extend: &[&str]) -> Vec<String> {
+    let email_list = urls
+        .iter()
+        .map(|url| reqwest::blocking::get(*url).unwrap().text().unwrap())
+        .map(|text| text.to_lowercase());
+
+    let init_list = extend
+        .iter()
+        .map(|&x| x.to_string())
+        .collect::<Vec<String>>();
+
+    let mut email_list = email_list.fold(init_list, |mut acc: Vec<String>, text| {
+        let x = text.lines().map(String::from).collect::<Vec<String>>();
+        acc.extend(x);
+        acc
+    });
+
+    email_list.sort_unstable();
+    email_list.dedup();
+
+    email_list
 }

@@ -8,33 +8,33 @@ The library offers features that can be toggled using Rust Cargo features.
 
 ## Features
 
-The library provides the following functions.
+The library provides the following functions:
 
-`is_work_domain`: Checks if the given domain is a work email domain.
-`is_work_email`: Checks if the given email address belongs to a work email domain.
+- `is_work_domain`: Checks if the given domain is a work email domain.
+- `is_work_email`: Checks if the given email address belongs to a work email domain.
 
-These two functions will check depends on the features you enabled,
-if you enabled the `free` feature, it will check if the email is not a free email,
-if you enabled the `disposable` feature, it will check if the email is not a disposable email.
-And if you enabled both, it will check if the email is not a free email and not a disposable email.
+These two functions will check depending on the features you enabled,
+if you enabled the `free` feature, it will check if the email is not free,
+if you enabled the `disposable` feature, it will check if the email is not disposable.
+And if you enable both, it will check if the email is not free and not disposable.
 
 ### Free Email Validation
 
-Enable the `free` feature to include functionality related to free email validation, e.g: `gmail.com`.
-The module includes a pre-generated list of free email domains, and the following functions are provided:
+Enable the `free` feature to include functionality related to free email validation, e.g.: `gmail.com`.
+The module includes a pre-generated list of free email domains and the following functions are provided:
 
 - `is_free_domain`: Checks if the given domain is a free email domain.
 - `is_free_email`: Checks if the given email address belongs to a free email domain.
 
 ### Disposable Email Validation
 
-Enable the "disposable" feature to include functionality related to disposable/temporary email validation, e.g: `temp-mail.org`. 
-The module includes a pre-generated list of disposable email domains, and the following functions are provided:
+Enable the "disposable" feature to include functionality related to disposable/temporary email validation, e.g.: `temp-mail.org`. 
+The module includes a pre-generated list of disposable email domains and the following functions are provided:
 
 - `is_disposable_domain`: Checks if the given domain is a disposable email domain.
 - `is_disposable_email`: Checks if the given email address belongs to a disposable email domain.
 
-This feature is disabled by default, because the list of disposable email domains is large and may not be necessary for all use cases.
+This feature is disabled by default because the list of disposable email domains is large and may not be necessary for all use cases.
 
 ## Usage
 
@@ -45,7 +45,7 @@ To use this library, add it as a dependency in your `Cargo.toml` file:
 email_validation = "0.1"
 ```
 
-The default feature is set to `free`, meaning that the free email validation functions are included by default.
+The default feature is set to `free`, meaning the free email validation functions are included by default.
 You can customize the features by specifying them in the `Cargo.toml` file.
 
 ### Example Usage

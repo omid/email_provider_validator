@@ -1,6 +1,6 @@
 [package]
 name = "email_provider_validator"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/omid/email_provider_validator"
@@ -20,3 +20,6 @@ reqwest = { version = "0.11", features = ["blocking"] }
 default = ["free"]
 free = []
 disposable = []
+
+[package.metadata.docs.rs]
+all-features = true

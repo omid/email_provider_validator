@@ -43,6 +43,8 @@ const FREE_EMAILS: &[&str] = &[
     "openmbox.net",
 ];
 
+const DISPOSAL_EMAILS: &[&str] = &["nezid.com", "zbock.com", "zslsz.com", "omeie.com"];
+
 // const EXAMPLE_DOMAINS: &[&str] = &[
 //     "example.com",
 //     "example.net",
@@ -83,7 +85,7 @@ fn main() {
             "https://disposable.github.io/disposable-email-domains/domains.txt",
             "https://raw.githubusercontent.com/FGRibreau/mailchecker/master/list.txt",
         ],
-        &[],
+        DISPOSAL_EMAILS,
     );
 
     gen_static(name, &email_list);

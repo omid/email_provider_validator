@@ -4,8 +4,7 @@ use std::io::{BufWriter, Write};
 use std::path::Path;
 
 fn main() {
-    let lists = vec![
-        (
+    let lists = [(
             "free",
             vec![
                 "https://f.hubspotusercontent40.net/hubfs/2832391/Marketing/Lead-Capture/free-domains-2.csv"
@@ -17,12 +16,7 @@ fn main() {
                 "https://disposable.github.io/disposable-email-domains/domains.txt",
                 "https://raw.githubusercontent.com/FGRibreau/mailchecker/master/list.txt"
             ]
-        ),
-        // (
-        //     "example",
-        //     vec![]
-        // ),
-    ];
+        )];
 
     for (name, download_list) in lists.iter() {
         if env::var("DOCS_RS").is_ok() {

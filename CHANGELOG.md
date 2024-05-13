@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.3] - 2024-05-13
+
+### Changed
+- Use rustls instead of native-tls for HTTPS requests in build.
+
 ## [0.1.0] - 2024-03-13
 
 ### Added

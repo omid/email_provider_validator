@@ -10,7 +10,7 @@ categories = ["email", "accessibility"]
 build = "build.rs"
 
 [dependencies]
-phf = { version = "0.11", default-features = false }
+phf = { version = "0.13", default-features = false }
 
 [build-dependencies]
 phf_codegen = "0.11"
